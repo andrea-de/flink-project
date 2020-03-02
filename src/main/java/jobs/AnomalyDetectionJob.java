@@ -10,6 +10,8 @@ import processes.AnomalyDetectionWindowedProcess;
 import processes.FlatMapReading;
 import processes.ReadingSink;
 
+import java.io.File;
+
 public class AnomalyDetectionJob {
     public static void main(String[] args) throws Exception {
 
@@ -18,8 +20,9 @@ public class AnomalyDetectionJob {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         env.setParallelism(1);
 
-        DataStream<String> text = env.readTextFile("TestFile.csv");
-//        DataStream<String> text = env.readTextFile("Small.csv");
+        String resources = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
+        DataStream<String> text = env.readTextFile(resources + "TestFile.csv");
+//        DataStream<String> text = env.readTextFile(resources + "Small.csv");
 
         DataStream<Reading> readings = text
                 .flatMap(new FlatMapReading())
