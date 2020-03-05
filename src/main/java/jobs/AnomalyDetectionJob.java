@@ -37,8 +37,8 @@ public class AnomalyDetectionJob {
                 .name("detection");
 
         readingPlusDataStream
-                .addSink(new ReadingSink())
-//                .addSink(new processes.InfluxDBSink())
+//                .addSink(new ReadingSink())
+                .addSink(new processes.InfluxDBSink())
                 .name("sink");
 
         env.execute("Anomaly Detection");
