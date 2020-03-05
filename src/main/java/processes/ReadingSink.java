@@ -8,7 +8,6 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction;
 public class ReadingSink implements SinkFunction<ReadingWithAnomalyScore> {
     @Override
     public void invoke(ReadingWithAnomalyScore value, Context context) throws Exception {
-//        System.out.println(value.getScore1());
-        System.out.println(value.getSensor1());
+        System.out.println("Sensor 1: " + value.getSensor1() + " | Score 1: " + value.getScore1());
     }
 }

@@ -1,12 +1,14 @@
 package jobs;
 
+import processes.WatermarkAssigner;
 import domain.Reading;
 import domain.ReadingWithAnomalyScore;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import processes.AnomalyDetectionWindowedProcess;
+import processes.AnomalyDetectionSlidingWindowedProcess;
 import processes.FlatMapReading;
 import processes.ReadingSink;
 
@@ -26,13 +28,12 @@ public class AnomalyDetectionJob {
 
         DataStream<Reading> readings = text
                 .flatMap(new FlatMapReading())
+                .assignTimestampsAndWatermarks(new WatermarkAssigner())
                 .name("readings");
 
         DataStream<ReadingWithAnomalyScore> readingPlusDataStream = readings
-                .keyBy(Reading::getTime)
-//                .process(new AnomalyDetectionProcess())
-                .timeWindow(Time.seconds(30))
-                .process(new AnomalyDetectionWindowedProcess())
+                .windowAll(SlidingProcessingTimeWindows.of(Time.seconds(120), Time.seconds(1)))
+                .process(new AnomalyDetectionSlidingWindowedProcess())
                 .name("detection");
 
         readingPlusDataStream

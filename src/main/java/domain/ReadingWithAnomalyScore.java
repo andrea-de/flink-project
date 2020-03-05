@@ -37,6 +37,15 @@ public class ReadingWithAnomalyScore {
         sensor10 = reading.getSensor10();
         if (aggregateData != null && aggregateData.getSensor1().size() > 1) {
             score1 = getScore(sensor1, aggregateData.getSensor1());
+            score1 = getScore(sensor2, aggregateData.getSensor2());
+            score1 = getScore(sensor3, aggregateData.getSensor3());
+            score1 = getScore(sensor4, aggregateData.getSensor4());
+            score1 = getScore(sensor5, aggregateData.getSensor5());
+            score1 = getScore(sensor6, aggregateData.getSensor6());
+            score1 = getScore(sensor7, aggregateData.getSensor7());
+            score1 = getScore(sensor8, aggregateData.getSensor8());
+            score1 = getScore(sensor9, aggregateData.getSensor9());
+            score1 = getScore(sensor10, aggregateData.getSensor10());
         }
     }
 
@@ -55,12 +64,13 @@ public class ReadingWithAnomalyScore {
             rL = (list.get((n / 4) - 1) + list.get(n / 4)) / 2;
             rH = (list.get((3 * n / 4) - 1) + list.get(3 * n / 4)) / 2;
         }
-        if (value < 1.5 * rL || value > 1.5 * rH) {
-            return 1;
-        } else if (value < 3 * rL || value > 3 * rH) {
+        double iqr = rH - rL;
+        if (value > rL - (1.5 * iqr) && value < rH + (1.5 * iqr)) {
+            return 0;
+        } else if (value > rL - (3 * iqr) && value < rH + (3 * iqr)) {
             return 0.5;
         } else {
-            return 0;
+            return 1;
         }
     }
 
