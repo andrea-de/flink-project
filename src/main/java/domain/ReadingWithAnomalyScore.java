@@ -12,7 +12,6 @@ public class ReadingWithAnomalyScore {
 
     private Long time;
     private double sensor1;
-    private double score1;
     private double sensor2;
     private double sensor3;
     private double sensor4;
@@ -22,6 +21,16 @@ public class ReadingWithAnomalyScore {
     private double sensor8;
     private double sensor9;
     private double sensor10;
+    private double score1;
+    private double score2;
+    private double score3;
+    private double score4;
+    private double score5;
+    private double score6;
+    private double score7;
+    private double score8;
+    private double score9;
+    private double score10;
 
     public ReadingWithAnomalyScore(Reading reading, AggregateData aggregateData) {
         time = reading.getTime();
@@ -37,15 +46,15 @@ public class ReadingWithAnomalyScore {
         sensor10 = reading.getSensor10();
         if (aggregateData != null && aggregateData.getSensor1().size() > 1) {
             score1 = getScore(sensor1, aggregateData.getSensor1());
-            score1 = getScore(sensor2, aggregateData.getSensor2());
-            score1 = getScore(sensor3, aggregateData.getSensor3());
-            score1 = getScore(sensor4, aggregateData.getSensor4());
-            score1 = getScore(sensor5, aggregateData.getSensor5());
-            score1 = getScore(sensor6, aggregateData.getSensor6());
-            score1 = getScore(sensor7, aggregateData.getSensor7());
-            score1 = getScore(sensor8, aggregateData.getSensor8());
-            score1 = getScore(sensor9, aggregateData.getSensor9());
-            score1 = getScore(sensor10, aggregateData.getSensor10());
+            score2 = getScore(sensor2, aggregateData.getSensor2());
+            score3 = getScore(sensor3, aggregateData.getSensor3());
+            score4 = getScore(sensor4, aggregateData.getSensor4());
+            score5 = getScore(sensor5, aggregateData.getSensor5());
+            score6 = getScore(sensor6, aggregateData.getSensor6());
+            score7 = getScore(sensor7, aggregateData.getSensor7());
+            score8 = getScore(sensor8, aggregateData.getSensor8());
+            score9 = getScore(sensor9, aggregateData.getSensor9());
+            score10 = getScore(sensor10, aggregateData.getSensor10());
         }
     }
 
