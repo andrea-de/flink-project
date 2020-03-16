@@ -1,17 +1,15 @@
 package jobs;
 
-import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
-import processes.WatermarkAssigner;
 import domain.Reading;
 import domain.ReadingWithAnomalyScore;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import processes.AnomalyDetectionSlidingWindowedProcess;
 import processes.FlatMapReading;
-import processes.ReadingSink;
+import processes.WatermarkAssigner;
 
 import java.io.File;
 
@@ -24,8 +22,7 @@ public class AnomalyDetectionJob {
         env.setParallelism(1);
 
         String resources = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
-        DataStream<String> text = env.readTextFile(resources + "TestFile.csv");
-//        DataStream<String> text = env.readTextFile(resources + "Small.csv");
+        DataStream<String> text = env.readTextFile(resources + "deprecate/TestFile.csv");
 
         DataStream<Reading> readings = text
                 .flatMap(new FlatMapReading())
@@ -38,7 +35,6 @@ public class AnomalyDetectionJob {
                 .name("detection");
 
         readingPlusDataStream
-//                .addSink(new ReadingSink())
                 .addSink(new processes.InfluxDBSink())
                 .name("sink");
 

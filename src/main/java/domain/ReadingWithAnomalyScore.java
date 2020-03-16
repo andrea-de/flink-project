@@ -2,8 +2,6 @@ package domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.math3.stat.StatUtils;
-import org.apache.commons.math3.util.FastMath;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,20 +46,16 @@ public class ReadingWithAnomalyScore {
         sensor10 = reading.getSensor10();
         if (aggregateData != null && aggregateData.getSensor1().size() > 1) {
             score1 = getScore(sensor1, aggregateData.getSensor1());
-//            score2 = getScore(sensor2, aggregateData.getSensor2());
-//            score3 = getScore(sensor3, aggregateData.getSensor3());
-//            score4 = getScore(sensor4, aggregateData.getSensor4());
-//            score5 = getScore(sensor5, aggregateData.getSensor5());
-//            score6 = getScore(sensor6, aggregateData.getSensor6());
-//            score7 = getScore(sensor7, aggregateData.getSensor7());
-//            score8 = getScore(sensor8, aggregateData.getSensor8());
-//            score9 = getScore(sensor9, aggregateData.getSensor9());
-//            score10 = getScore(sensor10, aggregateData.getSensor10());
+            score2 = getScore(sensor2, aggregateData.getSensor2());
+            score3 = getScore(sensor3, aggregateData.getSensor3());
+            score4 = getScore(sensor4, aggregateData.getSensor4());
+            score5 = getScore(sensor5, aggregateData.getSensor5());
+            score6 = getScore(sensor6, aggregateData.getSensor6());
+            score7 = getScore(sensor7, aggregateData.getSensor7());
+            score8 = getScore(sensor8, aggregateData.getSensor8());
+            score9 = getScore(sensor9, aggregateData.getSensor9());
+            score10 = getScore(sensor10, aggregateData.getSensor10());
         }
-    }
-
-    public ReadingWithAnomalyScore(Reading reading, Iterable<Reading> elements) {
-
     }
 
     double getScore(double value, List<Double> list) {
@@ -89,8 +83,5 @@ public class ReadingWithAnomalyScore {
             return 1;
         }
     }
-
-
-
 
 }

@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 public class AggregateData implements Serializable {
 
-    private Long time;
     private List<Double> sensor1 = new LinkedList<>();
     private List<Double> sensor2 = new LinkedList<>();
     private List<Double> sensor4 = new LinkedList<>();
@@ -22,14 +21,10 @@ public class AggregateData implements Serializable {
     private List<Double> sensor10 = new LinkedList<>();
 
     private static void addSensorReading(double d, List<Double> list) {
-        /*if (list.size() == 100) {
-            list.remove(0);
-        }*/
         list.add(d);
     }
 
     public void addReading(Reading reading) {
-        time = reading.getTime();
         addSensorReading(reading.getSensor1(), sensor1);
         addSensorReading(reading.getSensor2(), sensor2);
         addSensorReading(reading.getSensor3(), sensor3);

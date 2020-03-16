@@ -32,7 +32,6 @@ public class InfluxDBSink extends RichSinkFunction<ReadingWithAnomalyScore> {
     public void invoke(ReadingWithAnomalyScore readingWithAnomalyScore, Context context) throws Exception {
         Point.Builder builder = Point.measurement("domain.Reading")
                 .time(readingWithAnomalyScore.getTime(),TimeUnit.SECONDS)
-//                .addField("Time", readingWithAnomalyScore.getTime())
                 .addField("Sensor_1", readingWithAnomalyScore.getSensor1())
                 .addField("Score_1", readingWithAnomalyScore.getScore1())
                 .addField("Sensor_2", readingWithAnomalyScore.getSensor2())

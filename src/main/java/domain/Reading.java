@@ -21,7 +21,7 @@ public class Reading {
 
     public Reading(String[] strings) {
         time = Instant.parse(strings[0]).getEpochSecond();
-        sensor1 = Double.parseDouble(strings[2]);
+        sensor1 = Double.parseDouble(strings[1]);
         sensor2 = Double.parseDouble(strings[2]);
         sensor3 = Double.parseDouble(strings[3]);
         sensor4 = Double.parseDouble(strings[4]);
