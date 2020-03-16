@@ -1,6 +1,7 @@
 package processes;
 
 import domain.AggregateData;
+import domain.AnomalyCount;
 import domain.Reading;
 import domain.ReadingWithAnomalyScore;
 import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFunction;
@@ -10,6 +11,7 @@ import org.apache.flink.util.Collector;
 public class AnomalyDetectionSlidingWindowedProcess extends ProcessAllWindowFunction<Reading, ReadingWithAnomalyScore, TimeWindow> {
 
     private AggregateData aggregateData = new AggregateData();
+    private AnomalyCount anomalyCount = new AnomalyCount();
 
     @Override
     public void process(Context context, Iterable<Reading> elements, Collector<ReadingWithAnomalyScore> out) {
@@ -19,6 +21,8 @@ public class AnomalyDetectionSlidingWindowedProcess extends ProcessAllWindowFunc
             aggregateData.addReading(r);
             lastReading = r;
         }
-        out.collect(new ReadingWithAnomalyScore(lastReading, aggregateData));
+        ReadingWithAnomalyScore readingWithAnomalyScore = new ReadingWithAnomalyScore(lastReading, aggregateData, anomalyCount);
+        anomalyCount.trackAnomolies(readingWithAnomalyScore);
+        out.collect(readingWithAnomalyScore);
     }
 }

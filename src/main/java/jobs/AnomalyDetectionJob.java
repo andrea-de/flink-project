@@ -22,7 +22,7 @@ public class AnomalyDetectionJob {
         env.setParallelism(1);
 
         String resources = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator;
-        DataStream<String> text = env.readTextFile(resources + "deprecate/TestFile.csv");
+        DataStream<String> text = env.readTextFile(resources + "TestFile.csv");
 
         DataStream<Reading> readings = text
                 .flatMap(new FlatMapReading())

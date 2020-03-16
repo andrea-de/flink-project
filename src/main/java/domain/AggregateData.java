@@ -20,10 +20,6 @@ public class AggregateData implements Serializable {
     private List<Double> sensor9 = new LinkedList<>();
     private List<Double> sensor10 = new LinkedList<>();
 
-    private static void addSensorReading(double d, List<Double> list) {
-        list.add(d);
-    }
-
     public void addReading(Reading reading) {
         addSensorReading(reading.getSensor1(), sensor1);
         addSensorReading(reading.getSensor2(), sensor2);
@@ -35,6 +31,10 @@ public class AggregateData implements Serializable {
         addSensorReading(reading.getSensor8(), sensor8);
         addSensorReading(reading.getSensor9(), sensor9);
         addSensorReading(reading.getSensor10(), sensor10);
+    }
+
+    private static void addSensorReading(double d, List<Double> list) {
+        list.add(d);
     }
 
 }
