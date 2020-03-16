@@ -1,5 +1,6 @@
 package jobs;
 
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import processes.WatermarkAssigner;
 import domain.Reading;
 import domain.ReadingWithAnomalyScore;
@@ -32,7 +33,7 @@ public class AnomalyDetectionJob {
                 .name("readings");
 
         DataStream<ReadingWithAnomalyScore> readingPlusDataStream = readings
-                .windowAll(SlidingProcessingTimeWindows.of(Time.seconds(120), Time.seconds(1)))
+                .windowAll(SlidingEventTimeWindows.of(Time.minutes(60), Time.minutes(1)))
                 .process(new AnomalyDetectionSlidingWindowedProcess())
                 .name("detection");
 

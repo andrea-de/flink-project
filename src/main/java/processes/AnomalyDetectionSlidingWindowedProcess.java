@@ -13,9 +13,12 @@ public class AnomalyDetectionSlidingWindowedProcess extends ProcessAllWindowFunc
 
     @Override
     public void process(Context context, Iterable<Reading> elements, Collector<ReadingWithAnomalyScore> out) {
-        elements.forEach(reading -> {
-            aggregateData.addReading(reading);
-            out.collect(new ReadingWithAnomalyScore(reading, aggregateData));
-        });
+        aggregateData = new AggregateData();
+        Reading lastReading = null;
+        for (Reading r : elements){
+            aggregateData.addReading(r);
+            lastReading = r;
+        }
+        out.collect(new ReadingWithAnomalyScore(lastReading, aggregateData));
     }
 }

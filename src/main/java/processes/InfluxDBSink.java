@@ -11,13 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 public class InfluxDBSink extends RichSinkFunction<ReadingWithAnomalyScore> {
 
-    private static String dataBaseName = "mydb";
+    private static String dataBaseName = "anomalyDB";
     private transient InfluxDB influxDB = null;
 
     @Override
     public void open(Configuration parameters) throws Exception {
         super.open(parameters);
         influxDB = InfluxDBFactory.connect("http://localhost:8086", "admin", "admin");
+        influxDB.deleteDatabase(dataBaseName);
         influxDB.createDatabase(dataBaseName);
         influxDB.enableBatch(2000, 100, TimeUnit.MILLISECONDS);
     }
@@ -30,8 +31,8 @@ public class InfluxDBSink extends RichSinkFunction<ReadingWithAnomalyScore> {
     @Override
     public void invoke(ReadingWithAnomalyScore readingWithAnomalyScore, Context context) throws Exception {
         Point.Builder builder = Point.measurement("domain.Reading")
-//                .time(readingWithAnomalyScore.getTime())
-                .addField("Time", readingWithAnomalyScore.getTime())
+                .time(readingWithAnomalyScore.getTime(),TimeUnit.SECONDS)
+//                .addField("Time", readingWithAnomalyScore.getTime())
                 .addField("Sensor_1", readingWithAnomalyScore.getSensor1())
                 .addField("Score_1", readingWithAnomalyScore.getScore1())
                 .addField("Sensor_2", readingWithAnomalyScore.getSensor2())

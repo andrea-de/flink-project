@@ -20,7 +20,7 @@ public class WatermarkAssigner implements AssignerWithPeriodicWatermarks<Reading
 
     @Override
     public long extractTimestamp(Reading element, long previousElementTimestamp) {
-        long timestamp = element.getTime();
+        long timestamp = element.getTime()*1000;
         currentMaxTimestamp = Math.max(timestamp, currentMaxTimestamp);
         return timestamp;
     }

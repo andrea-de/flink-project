@@ -22,9 +22,9 @@ public class AggregateData implements Serializable {
     private List<Double> sensor10 = new LinkedList<>();
 
     private static void addSensorReading(double d, List<Double> list) {
-        if (list.size() == 100) {
+        /*if (list.size() == 100) {
             list.remove(0);
-        }
+        }*/
         list.add(d);
     }
 
